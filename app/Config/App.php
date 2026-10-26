@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'http://localhost/pruebas/';
+    public string $baseURL = '';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -199,4 +199,22 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
+    /**
+     * Sets the base URL automatically when it is not defined in the .env file.
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        if ($this->baseURL !== '') {
+            return;
+        }
+
+        $host   = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $scheme = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') ? 'https' : 'http';
+        $base   = rtrim(str_replace('\\', '/', dirname($_SERVER['SCRIPT_NAME'] ?? '/index.php')), '/');
+
+        $this->baseURL = $scheme . '://' . $host . ($base === '' ? '/' : $base . '/');
+    }
 }

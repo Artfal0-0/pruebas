@@ -31,4 +31,6 @@ $routes->post('producto/delete/(:num)', 'ProductoController::delete/$1');
 
 $routes->get('factura', 'FacturaController::index');
 $routes->get('factura/create', 'FacturaController::create');
+$routes->post('factura/store', 'FacturaController::store');
+$routes->get('factura/detalle/(:num)', 'FacturaController::detalle/$1');
 $routes->post('factura/delete/(:num)', 'FacturaController::delete/$1');
