@@ -13,38 +13,38 @@
 <?php endif; ?>
 
 <form action="<?= base_url('producto/store') ?>" method="post">
-    <?= csrf_field() ?>  
 
     <p>
         <label for="nombre">Nombre:</label>
         <input type="text" 
                name="nombre" 
+               id="nombre"
                placeholder="Nombre del producto" 
                required
-               maxlength="100">
+               maxlength="100"
+               value="<?= old('nombre') ?>">
     </p>
 
     <p>
         <label for="precio">Precio:</label>
-        <input type="number" 
-               step="0.01" 
-               min="0" 
+        <input type="text" 
                name="precio" 
-               placeholder="Solo números" 
+               id="precio"
+               placeholder="Ej: 12.50 o 12,50" 
                required
-               oninvalid="this.setCustomValidity('Solo se permiten números. No se permiten letras.')"
+               value="<?= old('precio') ?>">
     </p>
 
     <p>
         <label for="stock">Stock:</label>
-        <input type="number" 
-               min="0" 
+        <input type="text" 
                name="stock" 
-               placeholder="Solo números" 
+               id="stock"
+               placeholder="Solo números enteros" 
                required
-               oninvalid="this.setCustomValidity('Solo se permiten números. No se permiten letras.')"
+               value="<?= old('stock') ?>">
     </p>
-<br><br>
+    <br>
     <button type="submit">Guardar</button>
 </form>
 

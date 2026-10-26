@@ -26,45 +26,53 @@ class ProductoController extends Controller
     }
 
     public function store()
-{
-    $reglas = [
-        'nombre' => 'required|min_length[2]|max_length[100]',
-        'precio' => 'required|numeric|greater_than_equal_to[0]',
-        'stock'  => 'required|integer|greater_than_equal_to[0]',
-    ];
+    {
+        $precio = str_replace(',', '.', $this->request->getPost('precio'));
 
-    $mensajes = [
-        'nombre' => [
-            'required'   => 'El nombre es obligatorio',
-            'min_length' => 'El nombre debe tener al menos 2 caracteres',
-            'max_length' => 'El nombre no puede exceder los 100 caracteres',
-        ],
-        'precio' => [
-            'required'               => 'El precio es obligatorio',
-            'numeric'                => 'El precio solo puede contener números',
-            'greater_than_equal_to'  => 'El precio no puede ser negativo',
-        ],
-        'stock' => [
-            'required'               => 'El stock es obligatorio',
-            'integer'                => 'El stock solo puede contener números enteros',
-            'greater_than_equal_to'  => 'El stock no puede ser negativo',
-        ],
-    ];
+        $datosParaValidar = [
+            'nombre' => $this->request->getPost('nombre'),
+            'precio' => $precio,      
+            'stock'  => $this->request->getPost('stock'),
+        ];
 
-    if (!$this->validate($reglas, $mensajes)) {
-        return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        $reglas = [
+            'nombre' => 'required|min_length[2]|max_length[100]',
+            'precio' => 'required|numeric|greater_than_equal_to[0]',
+            'stock'  => 'required|integer|greater_than_equal_to[0]',
+        ];
+
+        $mensajes = [
+            'nombre' => [
+                'required'   => 'El nombre es obligatorio',
+                'min_length' => 'El nombre debe tener al menos 2 caracteres',
+                'max_length' => 'El nombre no puede exceder los 100 caracteres',
+            ],
+            'precio' => [
+                'required'              => 'El precio es obligatorio',
+                'numeric'               => 'El precio solo puede contener números (puede usar punto o coma)',
+                'greater_than_equal_to' => 'El precio no puede ser negativo',
+            ],
+            'stock' => [
+                'required'              => 'El stock es obligatorio',
+                'integer'               => 'El stock solo puede contener números enteros',
+                'greater_than_equal_to' => 'El stock no puede ser negativo',
+            ],
+        ];
+
+        if (!$this->validateData($datosParaValidar, $reglas, $mensajes)) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+
+        $datos = [
+            'nombre' => $datosParaValidar['nombre'],
+            'precio' => $datosParaValidar['precio'],
+            'stock'  => $datosParaValidar['stock'],
+        ];
+
+        $this->productoModel->insert($datos);
+
+        return redirect()->to('/producto')->with('success', 'Producto creado correctamente');
     }
-
-    $datos = [
-        'nombre' => $this->request->getPost('nombre'),
-        'precio' => $this->request->getPost('precio'),
-        'stock'  => $this->request->getPost('stock'),
-    ];
-
-    $this->productoModel->insert($datos);
-
-    return redirect()->to('/producto')->with('success', 'Producto creado correctamente');
-}
 
     public function delete($id)
     {
