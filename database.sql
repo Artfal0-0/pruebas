@@ -30,7 +30,6 @@ CREATE TABLE proveedores (
     telefono VARCHAR(20)
 );
 
-
 CREATE TABLE clientes (
     id_cliente INT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -45,14 +44,38 @@ CREATE TABLE producto (
     stock INT NOT NULL DEFAULT 0
 );
 
+-- Tabla principal: maestro de la factura
 CREATE TABLE factura (
     id_factura INT AUTO_INCREMENT PRIMARY KEY,
     id_cliente INT NOT NULL,
-    id_producto INT NOT NULL,
-    cantidad INT NOT NULL DEFAULT 1,
     fecha_emision DATETIME DEFAULT CURRENT_TIMESTAMP,
-    total DECIMAL(10,2) NOT NULL,
-    
-    CONSTRAINT fk_factura_cliente FOREIGN KEY (id_cliente) REFERENCES clientes(id_cliente) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_factura_producto FOREIGN KEY (id_producto) REFERENCES producto(id_producto) ON DELETE CASCADE ON UPDATE CASCADE
-);
+    total DECIMAL(10,2) NOT NULL DEFAULT 0.00,
+
+    CONSTRAINT fk_factura_cliente
+        FOREIGN KEY (id_cliente)
+        REFERENCES clientes(id_cliente)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
+
+-- Tabla secundaria: detalle de los productos de cada factura
+CREATE TABLE detalle_factura (
+    id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+    id_factura INT NOT NULL,
+    id_producto INT NOT NULL,
+    cantidad INT NOT NULL,
+    precio_unitario DECIMAL(10,2) NOT NULL,
+    subtotal DECIMAL(10,2) NOT NULL,
+
+    CONSTRAINT fk_detalle_factura
+        FOREIGN KEY (id_factura)
+        REFERENCES factura(id_factura)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
+    CONSTRAINT fk_detalle_producto
+        FOREIGN KEY (id_producto)
+        REFERENCES producto(id_producto)
+        ON DELETE RESTRICT
+        ON UPDATE CASCADE
+) ENGINE=InnoDB;
