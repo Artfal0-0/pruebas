@@ -11,6 +11,7 @@ $routes->post('transporte/delete/(:num)', 'TransporteController::delete/$1');
 
 $routes->get('pedido', 'PedidoController::index');
 $routes->get('pedido/create', 'PedidoController::create');
+$routes->post('pedido/store', 'PedidoController::store');
 $routes->post('pedido/delete/(:num)', 'PedidoController::delete/$1');
 
 $routes->get('vehiculos', 'VehiculosController::index');
