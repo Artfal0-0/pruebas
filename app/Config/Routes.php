@@ -21,6 +21,7 @@ $routes->post('vehiculos/delete/(:num)', 'VehiculosController::delete/$1');
 
 $routes->get('proveedores', 'ProveedoresController::index');
 $routes->get('proveedores/create', 'ProveedoresController::create');
+$routes->post('proveedores/store', 'ProveedoresController::store');
 $routes->post('proveedores/delete/(:num)', 'ProveedoresController::delete/$1');
 
 $routes->get('clientes', 'ClientesController::index');
