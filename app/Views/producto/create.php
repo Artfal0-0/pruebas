@@ -22,7 +22,7 @@
                placeholder="Nombre del producto" 
                required
                maxlength="100"
-               value="<?= old('nombre') ?>">
+               value="<?= esc(old('nombre')) ?>">
     </p>
 
     <p>
@@ -32,7 +32,7 @@
                id="precio"
                placeholder="Ej: 12.50 o 12,50" 
                required
-               value="<?= old('precio') ?>">
+               value="<?= esc(old('precio')) ?>">
     </p>
 
     <p>
@@ -42,7 +42,7 @@
                id="stock"
                placeholder="Solo números enteros" 
                required
-               value="<?= old('stock') ?>">
+               value="<?= esc(old('stock')) ?>">
     </p>
     <br>
     <button type="submit">Guardar</button>

@@ -27,12 +27,16 @@ class ProductoController extends Controller
 
     public function store()
     {
-        $precio = str_replace(',', '.', $this->request->getPost('precio'));
+        $nombre = esc($this->request->getPost('nombre'), 'html');
+        $precio = esc($this->request->getPost('precio'), 'html');
+        $stock  = esc($this->request->getPost('stock'), 'html');
+
+        $precioFormateado = str_replace(',', '.', $precio);
 
         $datosParaValidar = [
-            'nombre' => $this->request->getPost('nombre'),
-            'precio' => $precio,      
-            'stock'  => $this->request->getPost('stock'),
+            'nombre' => $nombre,
+            'precio' => $precioFormateado,      
+            'stock'  => $stock,
         ];
 
         $reglas = [
@@ -63,13 +67,7 @@ class ProductoController extends Controller
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
 
-        $datos = [
-            'nombre' => $datosParaValidar['nombre'],
-            'precio' => $datosParaValidar['precio'],
-            'stock'  => $datosParaValidar['stock'],
-        ];
-
-        $this->productoModel->insert($datos);
+        $this->productoModel->insert($datosParaValidar);
 
         return redirect()->to('/producto')->with('success', 'Producto creado correctamente');
     }
