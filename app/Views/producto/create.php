@@ -12,7 +12,7 @@
     </div>
 <?php endif; ?>
 
-<form action="<?= base_url('producto/store') ?>" method="post">
+<form action="<?= base_url('producto/store') ?>" method="post" id="formProducto">
 
     <p>
         <label for="nombre">Nombre:</label>
@@ -45,12 +45,18 @@
                value="<?= esc(old('stock')) ?>">
     </p>
     <br>
-    <button type="submit">Guardar</button>
+    <button type="submit" id="btnGuardar">Guardar</button>
 </form>
 
 <br>
 <a href="<?= base_url('producto') ?>">Volver</a>
-
+<script>
+    document.getElementById('formProducto').addEventListener('submit', function() {
+        const boton = document.getElementById('btnGuardar');
+        boton.disabled = true;
+        boton.innerText = 'Guardando...';
+    });
+</script>
 </main>
 </body>
 </html>
