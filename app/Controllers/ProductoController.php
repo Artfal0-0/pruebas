@@ -29,7 +29,7 @@ class ProductoController extends Controller
     {
         $nombre = esc($this->request->getPost('nombre'), 'html');
         $precio = esc($this->request->getPost('precio'), 'html');
-        $stock  = esc($this->request->getPost('stock'), 'html');
+        $stock  = (int)$this->request->getPost('stock');
 
         $precioFormateado = str_replace(',', '.', $precio);
 
@@ -41,7 +41,7 @@ class ProductoController extends Controller
 
         $reglas = [
             'nombre' => 'required|min_length[2]|max_length[100]',
-            'precio' => 'required|numeric|greater_than_equal_to[0]',
+            'precio' => 'required|decimal[2]|greater_than_equal_to[0]',
             'stock'  => 'required|integer|greater_than_equal_to[0]',
         ];
 

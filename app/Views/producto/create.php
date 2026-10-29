@@ -37,7 +37,9 @@
 
     <p>
         <label for="stock">Stock:</label>
-        <input type="text" 
+        <input type="number"
+               min="0"
+               step ="1"
                name="stock" 
                id="stock"
                placeholder="Solo números enteros" 
