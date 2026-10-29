@@ -13,6 +13,7 @@
     .alert-success { color: #166534; background: #dcfce7; }
     .vacio { padding: 20px; text-align: center; color: #6b7280; }
     .pie { margin-top: 20px; }
+    .acciones-fila { display: flex; gap: 10px; align-items: center; }
 </style>
 
 <div class="panel">
@@ -44,11 +45,14 @@
                     <td><?= esc($cliente['cedula']) ?></td>
                     <td><?= esc($cliente['telefono']) ?></td>
                     <td>
-                        <form action="<?= base_url('clientes/delete/' . $cliente['id_cliente']) ?>" method="post"
-                              onsubmit="return confirm('¿Eliminar el cliente <?= esc($cliente['nombre'], 'js') ?>?');">
-                            <?= csrf_field() ?>
-                            <button type="submit" class="btn btn-danger">Eliminar</button>
-                        </form>
+                        <div class="acciones-fila">
+                            <a class="btn" href="<?= base_url('clientes/edit/' . $cliente['id_cliente']) ?>">Editar</a>
+                            <form action="<?= base_url('clientes/delete/' . $cliente['id_cliente']) ?>" method="post"
+                                  onsubmit="return confirm('¿Eliminar el cliente <?= esc($cliente['nombre'], 'js') ?>?');">
+                                <?= csrf_field() ?>
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
+                        </div>
                     </td>
                 </tr>
             <?php endforeach; ?>

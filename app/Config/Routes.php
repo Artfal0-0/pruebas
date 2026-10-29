@@ -26,6 +26,8 @@ $routes->post('proveedores/delete/(:num)', 'ProveedoresController::delete/$1');
 $routes->get('clientes', 'ClientesController::index');
 $routes->get('clientes/create', 'ClientesController::create');
 $routes->post('clientes/store', 'ClientesController::store');
+$routes->get('clientes/edit/(:num)', 'ClientesController::edit/$1');
+$routes->post('clientes/update/(:num)', 'ClientesController::update/$1');
 $routes->post('clientes/delete/(:num)', 'ClientesController::delete/$1');
 
 $routes->get('producto', 'ProductoController::index');
