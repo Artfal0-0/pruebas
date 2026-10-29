@@ -7,6 +7,7 @@ $routes->get('/', 'Home::index');
 
 $routes->get('transporte', 'TransporteController::index');
 $routes->get('transporte/create', 'TransporteController::create');
+$routes->post('transporte/store', 'TransporteController::store');
 $routes->post('transporte/delete/(:num)', 'TransporteController::delete/$1');
 
 $routes->get('pedido', 'PedidoController::index');
